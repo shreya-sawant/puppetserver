@@ -1,0 +1,39 @@
+name: PR Testing s390x
+
+on:
+  workflow_dispatch:
+  pull_request:
+    types: [opened, reopened, edited, synchronize]
+    paths: ['src/**','test/**','project.clj']
+
+jobs:
+  pr-testing:
+    name: PR Testing
+    strategy:
+      fail-fast: false
+      matrix:
+        javaargs: ['with-profile fips', '']
+        filter: [':singlethreaded', ':multithreaded']
+        version: ['11', '17']
+    runs-on: ubuntu-24.04-s390x
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+      - name: setup java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: ${{ matrix.version }}
+      - name: setup ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1'
+      - name: setup gems
+        run: ./dev-setup
+      - name: clojure tests
+        run: lein -U ${{ matrix.javaargs }} test ${{ matrix.filter }}
+        timeout-minutes: 30
+      - name: rspec tests
+        run: rake spec
