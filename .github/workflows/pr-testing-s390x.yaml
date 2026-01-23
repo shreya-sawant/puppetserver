@@ -47,6 +47,6 @@ jobs:
         run: ./dev-setup
       - name: clojure tests
         run: lein -U ${{ matrix.javaargs }} test ${{ matrix.filter }}
-        timeout-minutes: 30
+        timeout-minutes: 60
       - name: rspec tests
         run: rake spec
