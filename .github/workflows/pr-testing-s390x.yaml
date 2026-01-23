@@ -34,6 +34,7 @@ jobs:
           ./configure --prefix=$HOME/ruby-3.1 --disable-install-doc
           make -j$(nproc)
           make install
+          export PATH="$HOME/ruby-3.1/bin:$PATH"
           echo "$HOME/ruby-3.1/bin" >> $GITHUB_PATH
           ruby -v
           gem install bundler
