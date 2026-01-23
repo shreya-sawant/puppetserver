@@ -26,10 +26,14 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: ${{ matrix.version }}
-      - name: setup ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '3.1'
+      - name: install ruby 3.1 and bundler
+        run: |
+          wget https://cache.ruby-lang.org/pub/ruby/3.1/ruby-3.1.5.tar.gz
+          tar -xzf ruby-3.1.5.tar.gz
+          cd ruby-3.1.5
+          ./configure && make
+          sudo make install
+          gem install bundler
       - name: setup gems
         run: ./dev-setup
       - name: clojure tests
