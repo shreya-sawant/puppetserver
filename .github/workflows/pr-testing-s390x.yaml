@@ -38,6 +38,11 @@ jobs:
           echo "$HOME/ruby-3.1/bin" >> $GITHUB_PATH
           ruby -v
           gem install bundler
+      - name: install lein
+        run: |
+          wget https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
+          chmod +x lein
+          sudo mv lein /usr/bin/
       - name: setup gems
         run: ./dev-setup
       - name: clojure tests
