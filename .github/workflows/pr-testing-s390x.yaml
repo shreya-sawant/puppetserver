@@ -46,7 +46,9 @@ jobs:
       - name: setup gems
         run: ./dev-setup
       - name: clojure tests
-        run: lein -U ${{ matrix.javaargs }} test ${{ matrix.filter }}
+        run: |
+          export JAVA_TOOL_OPTIONS="-Duser.timezone=UTC"
+          lein -U ${{ matrix.javaargs }} test ${{ matrix.filter }}
         timeout-minutes: 120
       - name: rspec tests
         run: rake spec
