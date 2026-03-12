@@ -48,9 +48,7 @@ jobs:
       - name: clojure tests
         run: |
           export JAVA_TOOL_OPTIONS="-Duser.timezone=UTC"
-              lein -U ${{ matrix.javaargs }} test \
-                :exclude puppetlabs.puppetserver.certificate-authority-test \
-                ${{ matrix.filter }}
+          lein -U ${{ matrix.javaargs }} test ${{ matrix.filter }}
         timeout-minutes: 120
       - name: rspec tests
         run: rake spec
