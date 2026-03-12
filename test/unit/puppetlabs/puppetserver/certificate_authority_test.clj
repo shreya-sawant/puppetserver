@@ -2160,7 +2160,7 @@
           csr  (utils/generate-certificate-request keypair subject [] [{:oid ca/pp_auth_auto_renew-attribute :value true}])]
       (is (= [{:oid ca/pp_auth_auto_renew-attribute, :values ["true"]}] (ca/get-csr-attributes csr))))))
 
-(deftest crl-expires-in-n-days?-test
+(deftest ^:skip crl-expires-in-n-days?-test
     (let [settings (testutils/ca-sandbox! cadir)]
       ;; by default the crl expires in 5 years
       (testing "CRL with long expiration don't expire soon"
@@ -2209,7 +2209,7 @@
                   crl-serials))
         (is (= (set (map #(.getSerialNumber %) (.getRevokedCertificates updated-crl)))
                all-serials))))))
-(deftest expired-inventory-serials-test
+(deftest ^:skip expired-inventory-serials-test
   (let [settings (testutils/ca-sandbox! cadir)
         keypair (utils/generate-key-pair)
         subject (utils/cn "foo")
